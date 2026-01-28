@@ -5,7 +5,7 @@ import {listTodos, createTodos, toggleTodo } from "../controllers/todo.controlle
 const router = Router();
 
 router.get("/", listTodos); //function that is called when user calls a GET request
-request.post("/", createTodos);
+router.post("/", createTodos);
 router.patch("/:id/toggle", toggleTodo);
 
 export default router;
