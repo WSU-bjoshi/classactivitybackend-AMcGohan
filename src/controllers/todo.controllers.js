@@ -1,34 +1,52 @@
-let nextId = 3;
-
-const todos = [
-    {id:1, task:"Try to have fun with express", done:false},
-    {id:2, task:"Buy eggs", done:false}
-]
+import { getAllTodos, createTodo, toggleTodoById, deleteTodoById, listTaskById} from "../services/todo.service.js";
 
 export function listTodos(req, res) {
+    const todos = getAllTodos();
     res.json({count: todos.length, todos});
 }
 
 export function createTodos(req, res) {
-    const {task} = req.body;
 
-    if (!task || typeof task !=="string" || task.trim()==="") {
-        return res.status(400).json({error:"task is required. You should provide non-empty string"});
+    try {
+        const {task} = req.body;
+        const todo = createTodo(task);
 
+        res.status(201).json({message:"Created", todo});
+    } catch(err) {
+        res.status(400).json({error:err.message});
     }
-
-    const todo = {id: nextId++, task:task.trim(), done: false};
-    todos.push(todo);
-
-    res.status(201).json({message:"Created", todo});
 }
+
+// Send a GET request with an ID to retrieve a task and its status
+
+export function listTask(req, res) {
+    const task = listTaskById(Number(req.params.id));
+    
+    if (!task) {
+        return res.status(404).json({error : "Task ID not found"});
+    }
+    res.json({task:task});
+}
+
+// Send a DELETE request with an ID to delete a task
 
 export function toggleTodo(req, res) {
     const id = Number(req.params.id);
-    const todo = todos.find(t => t.id === id);
-
-    if(!todo) return res.status(404).json({error:"todo not found", id});
-
-    todo.done = !todo.done;
+    const todo = toggleTodoById(id);
+    
+    if (!todo) {
+        return res.status(404).json({error : "Todo not found"});
+    }
     res.json({message:"Toggled", todo});
+}
+
+export function removeTodo(req, res) {
+    const id = Number(req.params.id);
+    const todo = deleteTodoById(id);
+
+    if (!todo) {
+        return res.status(400).json({error: "Todo not found"});
+    }
+
+    res.json({message: "Deleted Successfully"});
 }
