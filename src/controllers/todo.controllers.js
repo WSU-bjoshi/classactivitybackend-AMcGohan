@@ -1,16 +1,16 @@
 // import { getAllTodosService, createTodoService, toggleTodoByIdService, deleteTodoByIdService, listTaskByIdService} from "../services/todo.service.js";
 import {getAllTodosService, createTodoService, toggleTodoByIdService, deleteTodoByIdService, listTaskByIdService} from "../services/todo.service.js";
 
-export function listTodos(req, res) {
-    const todos = getAllTodosService();
+export async function listTodos(req, res) {
+    const todos = await getAllTodosService();
     res.json({count: todos.length, todos});
 }
 
-export function createTodos(req, res) {
+export async function createTodos(req, res) {
 
     try {
         const {task} = req.body;
-        const todo = createTodoService(task);
+        const todo = await createTodoService(task);
 
         res.status(201).json({message:"Created", todo});
     } catch(err) {
@@ -29,9 +29,7 @@ export function listTask(req, res) {
     res.json({task:task});
 }
 
-// Send a DELETE request with an ID to delete a task
-
-export function toggleTodo(req, res) {
+export async function toggleTodo(req, res) {
     const id = Number(req.params.id);
     const todo = toggleTodoByIdService(id);
     

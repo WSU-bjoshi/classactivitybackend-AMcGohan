@@ -1,3 +1,12 @@
+import pool from "../db/connection.js"
+import todo from "./todo.js";
+
+export async function getAllTodos() {
+    const [rows] = await pool.query("SELECT * FROM todos;")
+    console.log(rows);
+    return rows;
+}
+
 let nextId = 3;
 
 let todos = [
@@ -5,23 +14,29 @@ let todos = [
     {id:2, task:"Buy eggs", done:false}
 ];
 
-function getAllTodos() {
-    return todos;
+// function getAllTodos() {
+//     return todos;
+// }
+
+export async function createTodo(task) {
+    // const todo = {id: nextId++, task:task.trim(), done: false};
+    // todos.push(todo);
+    // return todo;
+
+    return await todo.create({task});
 }
 
-function createTodo(task) {
-    const todo = {id: nextId++, task:task.trim(), done: false};
-    todos.push(todo);
-    return todo;
-}
+export async function toggleTodoById(id){
+    // const todo = todos.find(t => t.id === id);
+    // if (!todo) {
+    //     return null;
+    // }
 
-function toggleTodoById(id){
-    const todo = todos.find(t => t.id === id);
-    if (!todo) {
-        return null;
-    }
-    todo.done= !todo.done;
-    return todo;
+    const [result] = await pool.query(
+        "UPDATE todos SET completed = NOT completed WHERE todos.id = ?", [id]
+    );
+
+    return pool.query("SELECT todos.task FROM todos WHERE todos.id = ?", [id]);
 }
 
 function deleteTodoById(id) {
@@ -37,9 +52,6 @@ function listTaskById(id) {
 }
 
 export default{
-    getAllTodos,
-    createTodo,
-    toggleTodoById,
     deleteTodoById,
     listTaskById
 };

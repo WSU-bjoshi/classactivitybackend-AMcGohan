@@ -1,23 +1,23 @@
-import todoModels from "../models/todo.models.js"
+import * as todoModels from "../models/todo.models.js"
 
 
-function getAllTodosService() {
-    return todoModels.getAllTodos();
+export async function getAllTodosService() {
+    return await todoModels.getAllTodos();
 }
 
-function createTodoService(task) {
+export async function createTodoService(task) {
     if (!task || typeof task !=="string" || task.trim()==="") {
         throw new error("Invalid task");
     }
-    return todoModels.createTodo(task);
+    return await todoModels.createTodo(task);
 }
 
-function toggleTodoByIdService(id) {
+export async function toggleTodoByIdService(id) {
     // const todo = todos.find(t => t.id === id);
     // if (!todo){
     //     return null;
     // }
-    return todoModels.toggleTodoById(todo);
+    return await todoModels.toggleTodoById(id);
 }
 
 function deleteTodoByIdService(id) {
@@ -39,9 +39,6 @@ function listTaskByIdService(id) {
 }
 
 export {
-    getAllTodosService,
-    createTodoService,
-    toggleTodoByIdService,
     deleteTodoByIdService,
     listTaskByIdService
 };
