@@ -14,24 +14,11 @@ let todos = [
     {id:2, task:"Buy eggs", done:false}
 ];
 
-// function getAllTodos() {
-//     return todos;
-// }
-
 export async function createTodo(task) {
-    // const todo = {id: nextId++, task:task.trim(), done: false};
-    // todos.push(todo);
-    // return todo;
-
     return await todo.create({task});
 }
 
 export async function toggleTodoById(id){
-    // const todo = todos.find(t => t.id === id);
-    // if (!todo) {
-    //     return null;
-    // }
-
     const [result] = await pool.query(
         "UPDATE todos SET completed = NOT completed WHERE todos.id = ?", [id]
     );
