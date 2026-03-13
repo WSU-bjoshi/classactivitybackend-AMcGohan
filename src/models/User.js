@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../db/sequelize";
+import sequelize from "../db/sequelize.js";
 
-const User = sequelize.define(
+export const User = sequelize.define(
     "User",
     {
         user_id: {
@@ -24,8 +24,10 @@ const User = sequelize.define(
         }
     },
         {
-            tableName: "tasks",
+            tableName: "users",
             timestamps: true,
             indexes: [{unique:true, fields:["user_email"]}]
         }
 );
+
+// export default user;
