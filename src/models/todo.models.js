@@ -15,7 +15,7 @@ let todos = [
 ];
 
 export async function createTodo(task) {
-    return await todo.create({task});
+    return await todo.create({userid, task});
 }
 
 export async function toggleTodoById(id){

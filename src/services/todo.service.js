@@ -1,11 +1,11 @@
 import * as todoModels from "../models/todo.models.js"
 
 
-export async function getAllTodosService() {
+export async function getUserTodosService() {
     return await todoModels.getAllTodos();
 }
 
-export async function createTodoService(task) {
+export async function createUserTodoService(task) {
     if (!task || typeof task !=="string" || task.trim()==="") {
         throw new error("Invalid task");
     }
@@ -13,10 +13,6 @@ export async function createTodoService(task) {
 }
 
 export async function toggleTodoByIdService(id) {
-    // const todo = todos.find(t => t.id === id);
-    // if (!todo){
-    //     return null;
-    // }
     return await todoModels.toggleTodoById(id);
 }
 

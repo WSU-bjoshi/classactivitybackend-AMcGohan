@@ -18,7 +18,8 @@ export async function register({name, email, password}) {
     const user = await User.create({
         user_name: name,
         user_email: normalizeEmail,
-        user_password: passwordHash
+        user_password: passwordHash,
+        user_role: role
     });
 
     const token = signAccessToken( {sub: String(user.user_id), email: user.user_email});
@@ -27,7 +28,7 @@ export async function register({name, email, password}) {
 }
 
 export async function login({email, password}) {
-    const normalizeEmail = email.toLowerCase();
+    const normalizeEmail = email;
     const user = await User.findOne({where: {user_email: normalizeEmail}});
 
     if (!(user)) {
