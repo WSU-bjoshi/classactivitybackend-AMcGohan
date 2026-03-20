@@ -4,8 +4,9 @@ export function validateBody(requiredFields = []){
             (f) => req.body?.[f] === undefined || req.body?.[f] === ""
         );
         if (missing.length) {
-            return res.status(400).json({error:`Missing required fields: ${missing.join(",")}`});
+            return res.status(400).json({error:`Missing required fields: ${missing.join(",")}`
+        })
         }
         next();
-    }
+    };
 }

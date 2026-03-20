@@ -17,11 +17,6 @@ export async function toggleTodoByIdService(id) {
 }
 
 function deleteTodoByIdService(id) {
-    // const todoIndex = todos.findIndex(t => t.id === id);
-
-    // if(todoIndex === -1){
-    //     return null;
-    // }
     return todoModels.deleteTodoById(id);
 }
 

@@ -14,6 +14,5 @@ export async function login(req, res) {
     if (!result.ok) {
         return res.status(result.status).json({error: result.error});
     }
-
     return res.status(200).json(result.data);
 }
